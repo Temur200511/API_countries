@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+</head>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REST Countries</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dark-mode {
+            background-color: #333;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .dark-mode .card {
+            background: #444;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+
+:root {
+    --bg-color: #f4f4f4;
+    --text-color: #111;
+}
+
+.dark-mode {
+    --bg-color: #333;
+    --text-color: #fff;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background: var(--bg-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#countries-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.country-card {
+    background: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+
+.country-card:hover {
+    transform: scale(1.05);
+}
+
+button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+    </style>
+
+<body>
+    <div class="container">
+        <button type="button" id="themeToggle">Toggle Dark Mode</button>
+        <h1>REST Countries</h1>
+        <div id="countries" class="grid"></div>
+    </div>
+
+
+    <header>
+        <h1>Where in the world?</h1>
+        <button type="button" id="theme-toggle">Dark Mode</button>
+    </header>
+    <main>
+        <div id="countries-container"></div>
+    </main>
+    
+    <script src="app.js"></script>
+</body>
+</html>
