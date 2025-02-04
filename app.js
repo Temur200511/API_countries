@@ -1,62 +1,138 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const body = document.body;
-    const themeToggle = document.getElementById("themeToggle");
-    const countriesContainer = document.getElementById("countries");
 
-    // Load theme from localStorage
-    if (localStorage.getItem("theme") === "dark") {
-        body.classList.add("dark-mode");
+
+// const list = document.getElementById('list')
+// async function getData(){
+//     const res = await fetch('https://restcountries.com/v3.1/all')
+//     const data = await res.json()
+
+//     if(!res.ok || res.status!==200){
+//         throw new Error('Xatolik')
+//     }
+    
+
+//     return data
+// }
+
+
+// getData()
+// .then((data) => {
+// render(data)
+// })
+// .catch((err) => {
+//     console.log(err)
+
+// })
+// .finally(() =>{
+
+// })
+
+// function render(data){
+//     if(data.length){
+//         data.map((country)=>{
+//             const div = document.createElement('div')
+//             div.innerHTML = `
+//             <img src='${country.flags.svg}' width = '264px' height = '160px' alt = '${country.flags.alt}'/>
+//             <b>${country.name.common}</b>
+
+//             <p>area</p>
+//             `
+//             console.log(country);
+
+//             list.append(div)
+
+            
+//         })
+//     }
+
+// }
+
+
+
+
+
+
+const list = document.getElementById('list');
+const searchInput = document.getElementById('searchBtn');
+const filterSelect = document.querySelector('.form-select');
+const themeToggle = document.querySelector('header button');
+const body = document.body;
+
+// Fetch Countries Data
+async function getData() {
+    try {
+        const res = await fetch('https://restcountries.com/v3.1/all');
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error('Error fetching data');
+        }
+
+        render(data);
+        return data;
+    } catch (error) {
+        console.error(error);
     }
+}
 
-    themeToggle.addEventListener("click", () => {
-        body.classList.toggle("dark-mode");
-        localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+let countriesData = [];
+
+getData().then(data => {
+    countriesData = data;
+});
+
+// Render Function
+function render(data) {
+    list.innerHTML = "";
+    data.forEach(country => {
+        const div = document.createElement('div');
+        div.innerHTML = `
+            <img src="${country.flags.svg}" width="264px" height="160px" alt="${country.flags.alt}" />
+            <b>${country.name.common}</b>
+            <p>Population: ${country.population.toLocaleString()}</p>
+            <p>Region: ${country.region}</p>
+        `;
+        list.append(div);
     });
+}
 
-    // Fetch countries data
-    fetch("https://restcountries.com/v3.1/all")
-        .then(response => response.json())
-        .then(data => {
-            countriesContainer.innerHTML = data.slice(0, 20).map(country => `
-                <div class="card">
-                    <img src="${country.flags.png}" alt="${country.name.common}" style="width: 100%; height: 150px; object-fit: cover;">
-                    <h2>${country.name.common}</h2>
-                    <p>Population: ${country.population.toLocaleString()}</p>
-                    <p>Region: ${country.region}</p>
-                </div>
-            `).join("");
-        });
+// Search Function
+searchInput.addEventListener('input', () => {
+    const searchValue = searchInput.value.toLowerCase();
+    const filteredData = countriesData.filter(country =>
+        country.name.common.toLowerCase().includes(searchValue)
+    );
+    render(filteredData);
+});
+
+// Filter by Region
+filterSelect.addEventListener('change', () => {
+    const region = filterSelect.value;
+    if (region === "Filter by Region") {
+        render(countriesData);
+    } else {
+        const filteredData = countriesData.filter(country => country.region === region);
+        render(filteredData);
+    }
+});
+
+// Dark Mode Toggle
+if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark-mode");
+}
+
+themeToggle.addEventListener("click", () => {
+    body.classList.toggle("dark-mode");
+    localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
 });
 
 
 
-document.addEventListener("DOMContentLoaded", () => {
-    const themeToggle = document.getElementById("theme-toggle");
-    const body = document.body;
-    
-    if (localStorage.getItem("theme") === "dark") {
-        body.classList.add("dark-mode");
-    }
-    
-    themeToggle.addEventListener("click", () => {
-        body.classList.toggle("dark-mode");
-        localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
-    });
-    
-    fetch("https://restcountries.com/v3.1/all")
-        .then(response => response.json())
-        .then(data => {
-            const container = document.getElementById("countries-container");
-            data.slice(0, 20).forEach(country => {
-                const card = document.createElement("div");
-                card.classList.add("country-card");
-                card.innerHTML = `
-                    <img src="${country.flags.png}" alt="${country.name.common}" width="100%">
-                    <h3>${country.name.common}</h3>
-                    <p>Population: ${country.population.toLocaleString()}</p>
-                    <p>Region: ${country.region}</p>
-                `;
-                container.appendChild(card);
-            });
-        });
-});
+
+
+
+
+
+
+
+
+
